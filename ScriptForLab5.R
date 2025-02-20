@@ -60,12 +60,7 @@ for(i in 1:length(features)){
 comparing.data = comparing.data |>
   mutate(Within.Range = 0) |>
   mutate(Out.of.Range = 0) |>
-  mutate(Outlying = 0) |>
-
-
-
-
-Within.Range = 0
+  mutate(Outlying = 0) 
 
 
 for(feature in features){
@@ -79,11 +74,33 @@ for(feature in features){
 }
 
 
+#Step 4
 
 
+(within.range.bar.plot = ggplot(comparing.data)+
+  geom_col(aes(x = artist, y = Within.Range))+
+  geom_hline(yintercept = 0)+
+  xlab("Artist")+
+  ylab("Amount of Data Within Range for the song ALlentown")+
+    theme_bw())
+
+
+(out.of.range.bar.plot = ggplot(comparing.data)+
+    geom_col(aes(x = artist, y = Out.of.Range))+
+    geom_hline(yintercept = 0)+
+    xlab("Artist")+
+    ylab("Amount of Data Out of Range for the Song ALlentown")+
+    theme_bw())
+
+(outlying.bar.plot = ggplot(comparing.data)+
+    geom_col(aes(x = artist, y = Outlying))+
+    geom_hline(yintercept = 0)+
+    xlab("Artist")+
+    ylab("Amount of Data Outlying for the Song ALlentown")+
+    theme_bw())
 
   
 
-compare(features[1])
+
 
 
