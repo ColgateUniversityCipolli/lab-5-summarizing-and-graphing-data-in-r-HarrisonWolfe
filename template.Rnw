@@ -1,0 +1,110 @@
+\documentclass{article}
+\usepackage{amsmath} %This allows me to use the align functionality.
+                     %If you find yourself trying to replicate
+                     %something you found online, ensure you're
+                     %loading the necessary packages!
+\usepackage{amsfonts}%Math font
+\usepackage{graphicx}%For including graphics
+\usepackage{hyperref}%For Hyperlinks
+\usepackage[shortlabels]{enumitem}% For enumerated lists with labels specified
+                                  % We had to run tlmgr_install("enumitem") in R
+\hypersetup{colorlinks = true,citecolor=black} %set citations to have black (not green) color
+\usepackage{natbib}        %For the bibliography
+\setlength{\bibsep}{0pt plus 0.3ex}
+\bibliographystyle{apalike}%For the bibliography
+\usepackage[margin=0.50in]{geometry}
+\usepackage{float}
+\usepackage{multicol}
+
+%fix for figures
+\usepackage{caption}
+\newenvironment{Figure}
+  {\par\medskip\noindent\minipage{\linewidth}}
+  {\endminipage\par\medskip}
+\begin{document}
+
+\vspace{-1in}
+\title{Lab 03 -- MATH 240 -- Computational Statistics}
+
+\author{
+  Harrison Wolfe \\
+  Colgate University  \\
+  Math Department \\
+  {\tt hwolfe@colgate.edu}
+}
+
+\date{2/6/2025}
+
+\maketitle
+
+\begin{multicols}{2}
+\begin{abstract}
+
+The goal of this lab was to create a set of data from 3 different bands. Using this data we wanted to show which band contributed most to the song "Allentown". We will do this by analyzing the trends from other songs from these artists then comparing that to the song itself. 
+\end{abstract}
+
+\noindent \textbf{Keywords:} Cleaning Data; Loops; Subsetting; Graphing
+
+\section{Introduction}
+
+This paper is intended to describe the process in which we can extract data from music and use that data to analyze trends. There are several important components to music like Key Signature, Time Signature, Mode, Tempo, Loudness, Dynamics and many more. Music can be comprised of vectors of information which is what the \texttt{jsonlite} package provdies to us. \citep{jsonlite} We can describe this data using box plots from the \texttt{tidyverse} package to compare the data from various artists against the song we are trying to see which band put the most work in. \citep{tidyverse}
+\subsection{Tasks}
+In this lab we are dealing with 181 tracks from 3 different artists and various albums. We had to pull the data from three spreadsheets (csv files) and set that up as a data frame with specific data points like those listed above (loudness, tempo, key signuture, etc) as the columns. Those columns described each track which were the rows. After we had all this data compiled into one data frame we were going to use that data to graph specific atributes about various artists like loudness, tempo, and timbre. 
+
+
+
+\section{Methods}
+
+
+\subsection{Task 1 Methods}
+
+In the first task we used a json file from a song called ``Au Revior (Adios)". We loaded it into \texttt{R} using the \texttt{jsonlite} package and then extracted data from it like it's average loudness, key signature, time signature, and tonality. \citep{jsonlite}  
+
+\subsection{Task 2 Methods}
+
+In the second task we imported various information about 181 different songs from 3 spreadsheets. In these spreadsheets there were different measurements of elements like happiness and sadness. In order to make the data more usable for charts and graphs we took the average of all these different categories with several different measurements for the same thing and put that into one column instead. We then combined the three different spreadsheets and removed unecessary columns to make the data more concise. This was also made possible using the \texttt{stringR} package to seperate the artist name, track name, and album name from the file name. \citep{stringr}
+
+\subsection{Task 3 Methods}
+
+In this task we created different bar graphs based on the data that we collected to draw conclusions about which artist contributed the most to the song ``Allentown". These graphs can be scene in the Appendix and are discussed in the Results and Discussion sections. (Figures \ref{Figure 1}, \ref{Figure 2}, \ref{Figure 3})
+
+\section{Results}
+From this lab we were able to create a spreadsheet with an ample amount of data about artists, The Front Bottoms, All Get Out, and Manchester Orchestra. Using this data we were able to create boxplots that show comparisons about musical data given the songs written by each band. These box plots can be seen in the appendix as Figure \ref{Figure 1}, Figure \ref{Figure 2}, and Figure \ref{Figure 3}.
+
+
+\section{Discussion}
+
+In order to make conclusions about the data we first need to find out the corresponding values for the song in question: ``Allentown". These can be seen below 
+
+
+\noindent If we reference Figure \ref{Figure 1} with this data we can see that the band All Get Out's IQR and median are respectively near and centered around the value above for sadness making it possible for that to be the band that contributed most to this aspect or the song in general. However, we can not conlcude anything just using one element becuase that is not a good sample size and this could very well be a coincidence especially since he value is quite close to the other bands as well. Looking at Figure \ref{Figure 2} we can see that the value from Allentown of the brightness of timbre is very close to the median brightness of timbre from the band The Front Bottoms making that metric suggest that they did some work on that timbre.  Finally using Figure \ref{Figure 3} we can see that based on Allentown's arousal it would be most aligned with the band Manchester Orchestra because it is well within the interquartile range and is also closest to their median. Based on these box plots we cannot draw any conclusions on who contributed most but using every single variable collected we might see a statistically signfigiant answer to show us one clear band that contributed more than the rest. 
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Bibliography
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\vspace{2em}
+
+
+\begin{tiny}
+\bibliography{bib}
+\end{tiny}
+\end{multicols}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Appendix
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\onecolumn
+\section{Appendix}
+These graphs could not fit in the one columns above so they are placed here in the Appendix. They display side by side boxplots of qualities of the various artists. They are discussed above in this report in comparison to the values from ``Allentown".
+
+
+
+
+\end{center}
+
+
+
+\end{document}

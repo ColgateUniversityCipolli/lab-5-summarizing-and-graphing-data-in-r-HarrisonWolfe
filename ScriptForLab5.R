@@ -57,6 +57,29 @@ for(i in 1:length(features)){
     right_join(results, by = "artist", suffix = c("", ""))
 }
   
+comparing.data = comparing.data |>
+  mutate(Within.Range = 0) |>
+  mutate(Out.of.Range = 0) |>
+  mutate(Outlying = 0) |>
+
+
+
+
+Within.Range = 0
+
+
+for(feature in features){
+  comparing.data = comparing.data |>
+    rowwise() |>
+    mutate(Within.Range = ifelse(get(feature) == "Within Range", Within.Range + 1, Within.Range)) |>
+    mutate(Out.of.Range = ifelse(get(feature) == "Out of Range", Out.of.Range + 1, Out.of.Range)) |>
+    mutate(Outlying = ifelse(get(feature) == "Outlying", Outlying + 1, Outlying))
+          
+      
+}
+
+
+
 
 
   
