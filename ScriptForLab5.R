@@ -40,29 +40,35 @@ compare = function(feature){#This function takes all the data and puts it into a
 #Step 2
 #I need a for loop to show 
 
+
+
+#This makes a dataframe of all the numeric values
 features = full.data |>
   select(-c("artist", "album","track","chords_scale","chords_key","key","mode")) |>
   colnames()
 
-
+#This creates the data frame for the artists to merge
 comparing.data = full.data |>
   group_by(artist) |>
   summarize() |>
   select(artist)
 
-
+#This makes the features into one dataframe with the outlying compared data using the function
 for(i in 1:length(features)){
   results = compare(features[i])
   comparing.data = comparing.data |>
     right_join(results, by = "artist", suffix = c("", ""))
 }
-  
+
+
+#This is to start the count at 0 for these rows  
 comparing.data = comparing.data |>
   mutate(Within.Range = 0) |>
   mutate(Out.of.Range = 0) |>
   mutate(Outlying = 0) 
 
 
+#This is going to make a count for each of the rows for each thing it detects
 for(feature in features){
   comparing.data = comparing.data |>
     rowwise() |>
@@ -70,37 +76,59 @@ for(feature in features){
     mutate(Out.of.Range = ifelse(get(feature) == "Out of Range", Out.of.Range + 1, Out.of.Range)) |>
     mutate(Outlying = ifelse(get(feature) == "Outlying", Outlying + 1, Outlying))
           
-      
 }
 
 
 #Step 4
 
-
+#Data where it is in the range (In the IQR)
 (within.range.bar.plot = ggplot(comparing.data)+
-  geom_col(aes(x = artist, y = Within.Range))+
+  geom_col(aes(x = artist, y = Within.Range, fill = artist))+
   geom_hline(yintercept = 0)+
   xlab("Artist")+
-  ylab("Amount of Data Within Range for the song ALlentown")+
-    theme_bw())
+  ylab("Amount of Data Within Range for the song Allentown")+
+  theme_minimal())+
+  guides(fill = "none")
 
 
+#Data for out of range (It will be above the min or below the max)
 (out.of.range.bar.plot = ggplot(comparing.data)+
-    geom_col(aes(x = artist, y = Out.of.Range))+
+    geom_col(aes(x = artist, y = Out.of.Range,fill = artist))+
     geom_hline(yintercept = 0)+
     xlab("Artist")+
-    ylab("Amount of Data Out of Range for the Song ALlentown")+
-    theme_bw())
+    ylab("Amount of Data Out of Range for the Song Allentown")+
+    theme_minimal())+
+    guides(fill = "none")
 
+#Box plot for the outlying data (It is an outliar)
 (outlying.bar.plot = ggplot(comparing.data)+
-    geom_col(aes(x = artist, y = Outlying))+
+    geom_col(aes(x = artist, y = Outlying, fill = artist))+
     geom_hline(yintercept = 0)+
     xlab("Artist")+
-    ylab("Amount of Data Outlying for the Song ALlentown")+
-    theme_bw())
+    ylab("Amount of Data Outlying for the Song Allentown")+
+    theme_minimal())+
+    guides(fill = "none")
+    
+  
+  
+  
 
   
 
+library(xtable)
 
-
+#Step 3
+#\begin{table}[ht]
+#\centering
+#\begin{tabular}{|c|ccc|}
+#\hline
+#Artist & Within Range & Out of Range & Outlying \\ 
+#\hline
+#All Get Out & 158.00 & 22.00 & 17.00 \\ 
+#Manchester Orchestra & 183.00 & 3.00 & 11.00 \\ 
+#The Front Bottoms & 156.00 & 30.00 & 11.00 \\ 
+#\hline
+#\end{tabular}
+#\end{table}
+#Commented out so code will still run
 

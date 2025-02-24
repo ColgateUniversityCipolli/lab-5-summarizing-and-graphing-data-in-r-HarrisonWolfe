@@ -75,32 +75,32 @@
 \begin{document}
 
 \vspace{-1in}
-\title{Lab 03 -- MATH 240 -- Computational Statistics}
+\title{Lab 02 -- MATH 240 -- Computational Statistics}
 
 \author{
   Harrison Wolfe \\
   Colgate University  \\
-  Math Department \\
+  Math  \\
   {\tt hwolfe@colgate.edu}
 }
 
-\date{2/6/2025}
+\date{}
 
 \maketitle
 
 \begin{multicols}{2}
 \begin{abstract}
 
-The goal of this lab was to create a set of data from 3 different bands. Using this data we wanted to show which band contributed most to the song "Allentown". We will do this by analyzing the trends from other songs from these artists then comparing that to the song itself. 
+This goal of this lab was to create a batch file containing a large number of codes to run to turn .wav files into .json files. Another goal of this lab was to start using large sets of data to analyze json files. 
 \end{abstract}
 
-\noindent \textbf{Keywords:} Cleaning Data; Loops; Subsetting; Graphing
+\noindent \textbf{Keywords:} Loops; Batch files; Organzing data; Subsetting
 
 \section{Introduction}
 
-This paper is intended to describe the process in which we can extract data from music and use that data to analyze trends. There are several important components to music like Key Signature, Time Signature, Mode, Tempo, Loudness, Dynamics and many more. Music can be comprised of vectors of information which is what the \texttt{jsonlite} package provdies to us. \citep{jsonlite} We can describe this data using box plots from the \texttt{tidyverse} package to compare the data from various artists against the song we are trying to see which band put the most work in. \citep{tidyverse}
+This paper is inteneded ot describe the process in which we can extract data from music and use that data to analyze trends. There are several important components to music like Key Signature, Time Signature, Mode, Tempo, Loudness \verb|(Dynamics)| and many more. Music can be comprised of vectors of information which is what the \texttt{jsonlite} package provdies to us. 
 \subsection{Tasks}
-In this lab we are dealing with 181 tracks from 3 different artists and various albums. We had to pull the data from three spreadsheets (csv files) and set that up as a data frame with specific data points like those listed above (loudness, tempo, key signuture, etc) as the columns. Those columns described each track which were the rows. After we had all this data compiled into one data frame we were going to use that data to graph specific atributes about various artists like loudness, tempo, and timbre. 
+In this lab we are dealing with 14 "songs" which are wav files recorded from various things laying around an office or something that a person could make. We want to use these songs to analyze musical trends about them and in doing so we need to convert their file type from a .wav to a .json. To do this we need a batch file to repeat this process several times without having to manually input each one. The other task as a part of this lab is to gather data about a song, \textbf{"Au Revior"}, which is already a json file. 
 
 
 
@@ -109,28 +109,18 @@ In this lab we are dealing with 181 tracks from 3 different artists and various 
 
 \subsection{Task 1 Methods}
 
-In the first task we used a json file from a song called ``Au Revior (Adios)". We loaded it into \texttt{R} using the \texttt{jsonlite} package and then extracted data from it like it's average loudness, key signature, time signature, and tonality. \citep{jsonlite}  
-
+In this task there were many steps required to organize the batch file. First it was important that we pulled the directories from the folder of music using the \texttt{list.dirs} command and then using the \texttt{list.files} we could list the files from each directory. Then, using the stringr package we were able to set it up in a way to be processed. With this package we were able to create both the input and output file command within the batch file. We first had to list the exact file by using the \texttt{list.files} function for the input and setting that as a vector with an ending of .wav to signify that this is what we want to turn into a json file. Then, for the output as we wanted in the format of album-artist-song.json we needed to separate the name using the \texttt{stringr} package saving the artist, album, and song separately with .json at the end to show the output should be a json file. Then again using the \texttt{paste} tool we could add that all together making one command in the batch file. Using for loops for each of these processes we could replicate this for all 14 songs to make a complete batch file. 
 \subsection{Task 2 Methods}
 
-In the second task we imported various information about 181 different songs from 3 spreadsheets. In these spreadsheets there were different measurements of elements like happiness and sadness. In order to make the data more usable for charts and graphs we took the average of all these different categories with several different measurements for the same thing and put that into one column instead. We then combined the three different spreadsheets and removed unecessary columns to make the data more concise. This was also made possible using the \texttt{stringR} package to seperate the artist name, track name, and album name from the file name. \citep{stringr}
-
-\subsection{Task 3 Methods}
-
-In this task we created different bar graphs based on the data that we collected to draw conclusions about which artist contributed the most to the song ``Allentown". These graphs can be scene in the Appendix and are discussed in the Results and Discussion sections. (Figures \ref{Figure 1}, \ref{Figure 2}, \ref{Figure 3})
+In this task we used the \texttt{jsonlite} package to give us various information about a given song. By installing the package and using the \texttt{fromJSON} command we were able to see all of this data about the json file. It gave us information like the Key, Tempo, and many others. After saving this information to an object we could use the subsetting tool to figure out this various information using help from the guide to find the exact path of the attributes needed from the song. 
 
 \section{Results}
-From this lab we were able to create a spreadsheet with an ample amount of data about artists, The Front Bottoms, All Get Out, and Manchester Orchestra. Using this data we were able to create boxplots that show comparisons about musical data given the songs written by each band. These box plots can be seen in the appendix as Figure \ref{Figure 1}, Figure \ref{Figure 2}, and Figure \ref{Figure 3}.
+While there were not many results from this lab we had two products from each task. The first product was a complete batch file which will later allow us to conver the .wav files into .json files. Doing this will allow us to use the \texttt{jsonlite} package to extract the information that we want from the songs. This information will give a statisical background for the style of a given artist and also numerically define differences between music. The other product from this lab was a list of information about the song Au Revoir from the album Talon Of The Hawk by The Front Bottoms. 
 
 
 \section{Discussion}
 
-In order to make conclusions about the data we first need to find out the corresponding values for the song in question: ``Allentown". These can be seen below 
-
-
-\noindent If we reference Figure \ref{Figure 1} with this data we can see that the band All Get Out's IQR and median are respectively near and centered around the value above for sadness making it possible for that to be the band that contributed most to this aspect or the song in general. However, we can not conlcude anything just using one element becuase that is not a good sample size and this could very well be a coincidence especially since he value is quite close to the other bands as well. Looking at Figure \ref{Figure 2} we can see that the value from Allentown of the brightness of timbre is very close to the median brightness of timbre from the band The Front Bottoms making that metric suggest that they did some work on that timbre.  Finally using Figure \ref{Figure 3} we can see that based on Allentown's arousal it would be most aligned with the band Manchester Orchestra because it is well within the interquartile range and is also closest to their median. Based on these box plots we cannot draw any conclusions on who contributed most but using every single variable collected we might see a statistically signfigiant answer to show us one clear band that contributed more than the rest. 
-
-
+There is very little subjectivity form this lab as it was a methodical assignment that explored two tasks which could either be done correctly or incorrectly. As there was no real product it is hard to evaluate something and present conclusions from data whne we are just producing something rather than analyzing. While there was the list of data givne form the song \textbf{Au Revoir}, there were no hypothesis testing, confidence intervals, or any other infromative processes to draw from the data. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Bibliography
@@ -148,14 +138,17 @@ In order to make conclusions about the data we first need to find out the corres
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newpage
 \onecolumn
-\section{Appendix}
-These graphs could not fit in the one columns above so they are placed here in the Appendix. They display side by side boxplots of qualities of the various artists. They are discussed above in this report in comparison to the values from ``Allentown".
-
-
-
-
-\end{center}
-
-
+\begin{table}[ht]
+\centering
+\begin{tabular}{|c|ccc|}
+\hline
+Artist & Within Range & Out of Range & Outlying \\ 
+\hline
+All Get Out & 158.00 & 22.00 & 17.00 \\ 
+Manchester Orchestra & 183.00 & 3.00 & 11.00 \\ 
+The Front Bottoms & 156.00 & 30.00 & 11.00 \\ 
+\hline
+\end{tabular}
+\end{table}
 
 \end{document}
