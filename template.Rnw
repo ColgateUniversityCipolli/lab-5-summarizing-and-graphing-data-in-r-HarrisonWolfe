@@ -24,12 +24,12 @@
 \begin{document}
 
 \vspace{-1in}
-\title{Lab 02 -- MATH 240 -- Computational Statistics}
+\title{Lab 05 -- MATH 240 -- Computational Statistics}
 
 \author{
   Harrison Wolfe \\
   Colgate University  \\
-  Math  \\
+  Math Department\\
   {\tt hwolfe@colgate.edu}
 }
 
@@ -40,16 +40,27 @@
 \begin{multicols}{2}
 \begin{abstract}
 
-This goal of this lab was to create a batch file containing a large number of codes to run to turn .wav files into .json files. Another goal of this lab was to start using large sets of data to analyze json files. 
+The goal of this lab was to create a set of data
+from 3 different bands. Using this data we wanted to
+show which band contributed most to the song ``Allentown”.
+We will do this by analyzing the trends from
+other songs from these artists then comparing that to
+the song itself.
 \end{abstract}
 
-\noindent \textbf{Keywords:} Loops; Batch files; Organzing data; Subsetting
+\noindent \textbf{Keywords:} Loops; Batch files; Organzing data; Subsetting; \texttt{tidyverse}
 
 \section{Introduction}
 
-This paper is inteneded ot describe the process in which we can extract data from music and use that data to analyze trends. There are several important components to music like Key Signature, Time Signature, Mode, Tempo, Loudness \verb|(Dynamics)| and many more. Music can be comprised of vectors of information which is what the \texttt{jsonlite} package provdies to us. 
+This paper is intended to describe the process in which we can extract data from music and use that data to determine if the band, All Get Out, Manchester Orchestra, or the Front Bottoms contributed most to the song Allentown. There are several important components to music like Key, Lyrics, Overall Loudness, Emotion (Happiness, Sadness, Aggressiveness) and many more. Music can be summarized in many different ways and we attempt to analyze many quantifiable categories to make the most accurate possible guess. We will make this guess based on plots and tables created using the many different data points collected.
 \subsection{Tasks}
-In this lab we are dealing with 14 "songs" which are wav files recorded from various things laying around an office or something that a person could make. We want to use these songs to analyze musical trends about them and in doing so we need to convert their file type from a .wav to a .json. To do this we need a batch file to repeat this process several times without having to manually input each one. The other task as a part of this lab is to gather data about a song, \textbf{"Au Revior"}, which is already a json file. 
+In this lab we are dealing with 181 tracks from 3 different
+artists and various albums. We had to pull the data from
+two spreadsheets (csv files) and and set that up as a data frame
+with specific data points like those listed above (loudness,
+tempo, key, etc) as the columns. After this we had to take an imported json file from the \texttt{jsonlite} package and turn that into a spreadsheet until we eventually combined that data with the rest \citep{jsonlite}. The columns displayed data about the various musical properties while the rows represented the tracks. After we had all
+this data compiled into one data frame we were going to use
+that data to show which band had contributed most to Allentown. 
 
 
 
@@ -58,18 +69,24 @@ In this lab we are dealing with 14 "songs" which are wav files recorded from var
 
 \subsection{Task 1 Methods}
 
-In this task there were many steps required to organize the batch file. First it was important that we pulled the directories from the folder of music using the \texttt{list.dirs} command and then using the \texttt{list.files} we could list the files from each directory. Then, using the stringr package we were able to set it up in a way to be processed. With this package we were able to create both the input and output file command within the batch file. We first had to list the exact file by using the \texttt{list.files} function for the input and setting that as a vector with an ending of .wav to signify that this is what we want to turn into a json file. Then, for the output as we wanted in the format of album-artist-song.json we needed to separate the name using the \texttt{stringr} package saving the artist, album, and song separately with .json at the end to show the output should be a json file. Then again using the \texttt{paste} tool we could add that all together making one command in the batch file. Using for loops for each of these processes we could replicate this for all 14 songs to make a complete batch file. 
+First, we imported various information about
+181 different songs from 2 spreadsheets and a json file. Each spreadsheet had a different types of data about the various tracks. The first set of data came from \texttt{Essentia Extractor Data} which gave us information about the statistics of music like the overall loudness and the spectral energy \citep{bogdanov2013essentia}. The data from \texttt{Essentia Extractor Data} was outputted as a json file which the \texttt{jsonlite} package then converted into a very long list which we turned into a spreadsheet \citep{jsonlite}. The second spreadsheet came from \texttt{Essentia Models} and gave us information about the mood or vibe of the song \citep{9054688}. This described information about how happy,sad, agreessive, etc. the songs were. The final spreadhseet came from \texttt{LIWC Output} and analyzed the lyrics of each song \citep{boyd2022development}. It provided a count of certain repeated words across each song. This was also made possible using the \texttt{stringR} from the \texttt{tidyverse} package to separate the artist name, track name, and album name from the file name \citep{tidyverse}. After putting all the spreadsheets into one larger one grouped by each track we were able to keep the columns that were most relevant to determining which band contributed most. 
+
 \subsection{Task 2 Methods}
 
-In this task we used the \texttt{jsonlite} package to give us various information about a given song. By installing the package and using the \texttt{fromJSON} command we were able to see all of this data about the json file. It gave us information like the Key, Tempo, and many others. After saving this information to an object we could use the subsetting tool to figure out this various information using help from the guide to find the exact path of the attributes needed from the song. 
+Using the data from task 1 we then created a list of statistics about each band in each of these categories. With those statistics we were able to say whether Allentown was within the middle 50 percent (IQR) of data for each band (Within Range), whether it was not even in the range of something ever created by the band (Out of Range), or whether it as an outlier for this piece of data, meaning that it was quite far away from the IQR (Outlying). We did this for each statistics we had collected on the band. After we had this we counted the total number of qualities for each band that were "Within Range", "Out of Range", or "Outlying" and graphed them. 
+
 
 \section{Results}
-While there were not many results from this lab we had two products from each task. The first product was a complete batch file which will later allow us to conver the .wav files into .json files. Doing this will allow us to use the \texttt{jsonlite} package to extract the information that we want from the songs. This information will give a statisical background for the style of a given artist and also numerically define differences between music. The other product from this lab was a list of information about the song Au Revoir from the album Talon Of The Hawk by The Front Bottoms. 
+From this lab we were able to create a spreadsheet with an
+ample amount of data about artists, The Front Bottoms, All
+Get Out, and Manchester Orchestra. Using this data we were
+able to create column plots and a table that the amount of data that is Within Range, Out of Range, and Outlying for each given statistic. These column plots and table can be seen in the appendix as Table \ref{Table 1}, Figure \ref{Figure 1}, Figure \ref{Figure 2}, and Figure \ref{Figure 3}. Each of the column plots were made using \texttt{ggplot2} and the table was made using \texttt{xtable} \citep{ggplot} \citep{xtable}.
 
 
 \section{Discussion}
 
-There is very little subjectivity form this lab as it was a methodical assignment that explored two tasks which could either be done correctly or incorrectly. As there was no real product it is hard to evaluate something and present conclusions from data whne we are just producing something rather than analyzing. While there was the list of data givne form the song \textbf{Au Revoir}, there were no hypothesis testing, confidence intervals, or any other infromative processes to draw from the data. 
+Using the data from Table \ref{Table 1} and Figures \ref{Figure 1}, \ref{Figure 2}, and \ref{Figure 3} we can clearly see that the band Manchester Orchestra has the highest amount of data points "Within Range" and the least amount of data points that are both "Out of Range" and "Outlying". From this we can say that Manchester Orchestra is the band that contributed most becuase they have the most amount of categories that are similar in the acoustic, lyrical, and tonal categories. This means that Allentown would fit Manchester Orchestra best because it is the most similar in the data points that were analyzed in this lab. It is important to note that while the data from this lab leads us to believe that Manchester Orchestra contributed the most there is always a possibility that the other bands contributed more. Speculation based on the data is the best we can do in this case scenario however since Manchester Orchestra has so few categories that are "Out of Range" and "Outlying" it is logical to assume that this could be very well be their song that they contributed most to. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Bibliography
@@ -87,6 +104,8 @@ There is very little subjectivity form this lab as it was a methodical assignmen
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newpage
 \onecolumn
+\section{Appendix}
+These graphs could not fit in the template above so they have been placed in the Appendix instead. They are tables and column graphs demonstrating the data from above. These tables and graphs were made using \texttt{xtable} and \texttt{ggplot2} respectively \citep{xtable} \citep{ggplot}.
 \begin{table}[ht]
 \centering
 \begin{tabular}{|c|ccc|}
@@ -98,6 +117,318 @@ Manchester Orchestra & 183.00 & 3.00 & 11.00 \\
 The Front Bottoms & 156.00 & 30.00 & 11.00 \\ 
 \hline
 \end{tabular}
+\caption{Table that shows how many datapoints are Within Range, Out of Range, or Outyling for each band}
+\label{Table 1}
 \end{table}
 
+\begin{figure}[ht]
+\begin{center}
+<<fig.width = 5.5, fig.height= 5.5, echo=F,message=F>>=
+library(tidyverse)
+
+#Step 1
+allentown.data = read_csv("data/essentia.data.allentown.csv")
+full.data = read_csv("data/essentia.data.csv")
+
+loudness.artist.data = full.data |>
+  group_by(artist) |>
+  summarize(#Finds the stats
+    IQR = quantile(overall_loudness, .75) - quantile(overall_loudness, 0.25),
+    Min = min(overall_loudness),
+    LF = quantile(overall_loudness, 0.25) - 1.5*IQR,
+    UF = quantile(overall_loudness, .75) + 1.5*IQR,
+    Max = max(overall_loudness)) |> #Puts all the stats in columns after to make it easier to look at
+  mutate(out.of.range = ifelse(allentown.data$overall_loudness > Max | allentown.data$overall_loudness < Min, "True", "False")) |>
+  mutate(unusual = ifelse(allentown.data$overall_loudness > UF | allentown.data$overall_loudness < LF, "True", "False")) |>
+  mutate(description = case_when(out.of.range == "True" ~ "Out of Range",
+                                 unusual == "True" ~ "Outlying",
+                                 TRUE ~ "Within Range"))
+
+compare = function(feature){#This function calculates how close it is to the IQR or range of a band for any given feature
+  artist.data = full.data |>
+    group_by(artist) |>
+    summarize(
+      IQR = quantile(get(feature), .75, na.rm=T) - quantile(get(feature), 0.25, na.rm=T),
+      Min = min(get(feature), na.rm=T),
+      LF = quantile(get(feature), 0.25, na.rm=T) - 1.5*IQR,
+      UF = quantile(get(feature), .75, na.rm=T) + 1.5*IQR,
+      Max = max(get(feature))) |>
+    mutate(out.of.range = ifelse(allentown.data[[feature]] > Max | allentown.data[[feature]] < Min, "True", "False")) |>
+    mutate(unusual = ifelse(allentown.data[[feature]] > UF | allentown.data[[feature]] < LF, "True", "False")) |>
+    mutate(!!feature := case_when(out.of.range == "True" ~ "Out of Range",
+                                   unusual == "True" ~ "Outlying",
+                                   TRUE ~ "Within Range")) |>
+    select(artist, !!sym(feature))
+  return(artist.data)
+  
+}
+
+#Step 2
+#I need a for loop to show 
+
+
+
+#This makes a dataframe of all the numeric values
+features = full.data |>
+  select(-c("artist", "album","track","chords_scale","chords_key","key","mode")) |>
+  colnames()
+
+            
+
+
+
+#This creates the data frame for the artists to merge
+comparing.data = full.data |>
+  group_by(artist) |>
+  summarize() |>
+  select(artist)
+
+#This makes the features into one dataframe with the outlying compared data using the function
+for(i in 1:length(features)){
+  results = compare(features[i])
+  comparing.data = comparing.data |>
+    right_join(results, by = "artist", suffix = c("", ""))
+}
+
+
+#This is to start the count at 0 for these rows  
+comparing.data = comparing.data |>
+  mutate(Within.Range = 0) |>
+  mutate(Out.of.Range = 0) |>
+  mutate(Outlying = 0) 
+
+
+#This is going to make a count for each of the rows for each thing it detects
+for(feature in features){
+  comparing.data = comparing.data |>
+    rowwise() |>
+    mutate(Within.Range = ifelse(get(feature) == "Within Range", Within.Range + 1, Within.Range)) |>
+    mutate(Out.of.Range = ifelse(get(feature) == "Out of Range", Out.of.Range + 1, Out.of.Range)) |>
+    mutate(Outlying = ifelse(get(feature) == "Outlying", Outlying + 1, Outlying))
+          
+}
+
+#Data where it is in the range (In the IQR)
+(within.range.bar.plot = ggplot(comparing.data)+
+  geom_col(aes(x = artist, y = Within.Range, fill = artist))+
+  geom_hline(yintercept = 0)+
+  xlab("Artist")+
+  ylab("Amount of Data Within Range for the song Allentown")+
+  theme_minimal())+
+  guides(fill = "none")
+@
+\caption{Number of Statistics Within Range for Each Band}
+\label{Figure 1}
+\end{center}
+\end{figure}
+
+
+\begin{figure}[ht]
+\begin{center}
+<<fig.width = 5.5, fig.height= 5.5, echo=F,message=F>>=
+library(tidyverse)
+
+#Step 1
+allentown.data = read_csv("data/essentia.data.allentown.csv")
+full.data = read_csv("data/essentia.data.csv")
+
+loudness.artist.data = full.data |>
+  group_by(artist) |>
+  summarize(#Finds the stats
+    IQR = quantile(overall_loudness, .75) - quantile(overall_loudness, 0.25),
+    Min = min(overall_loudness),
+    LF = quantile(overall_loudness, 0.25) - 1.5*IQR,
+    UF = quantile(overall_loudness, .75) + 1.5*IQR,
+    Max = max(overall_loudness)) |> #Puts all the stats in columns after to make it easier to look at
+  mutate(out.of.range = ifelse(allentown.data$overall_loudness > Max | allentown.data$overall_loudness < Min, "True", "False")) |>
+  mutate(unusual = ifelse(allentown.data$overall_loudness > UF | allentown.data$overall_loudness < LF, "True", "False")) |>
+  mutate(description = case_when(out.of.range == "True" ~ "Out of Range",
+                                 unusual == "True" ~ "Outlying",
+                                 TRUE ~ "Within Range"))
+
+compare = function(feature){#This function calculates how close it is to the IQR or range of a band for any given feature
+  artist.data = full.data |>
+    group_by(artist) |>
+    summarize(
+      IQR = quantile(get(feature), .75, na.rm=T) - quantile(get(feature), 0.25, na.rm=T),
+      Min = min(get(feature), na.rm=T),
+      LF = quantile(get(feature), 0.25, na.rm=T) - 1.5*IQR,
+      UF = quantile(get(feature), .75, na.rm=T) + 1.5*IQR,
+      Max = max(get(feature))) |>
+    mutate(out.of.range = ifelse(allentown.data[[feature]] > Max | allentown.data[[feature]] < Min, "True", "False")) |>
+    mutate(unusual = ifelse(allentown.data[[feature]] > UF | allentown.data[[feature]] < LF, "True", "False")) |>
+    mutate(!!feature := case_when(out.of.range == "True" ~ "Out of Range",
+                                   unusual == "True" ~ "Outlying",
+                                   TRUE ~ "Within Range")) |>
+    select(artist, !!sym(feature))
+  return(artist.data)
+  
+}
+
+#Step 2
+#I need a for loop to show 
+
+
+
+#This makes a dataframe of all the numeric values
+features = full.data |>
+  select(-c("artist", "album","track","chords_scale","chords_key","key","mode")) |>
+  colnames()
+
+            
+
+
+
+#This creates the data frame for the artists to merge
+comparing.data = full.data |>
+  group_by(artist) |>
+  summarize() |>
+  select(artist)
+
+#This makes the features into one dataframe with the outlying compared data using the function
+for(i in 1:length(features)){
+  results = compare(features[i])
+  comparing.data = comparing.data |>
+    right_join(results, by = "artist", suffix = c("", ""))
+}
+
+
+#This is to start the count at 0 for these rows  
+comparing.data = comparing.data |>
+  mutate(Within.Range = 0) |>
+  mutate(Out.of.Range = 0) |>
+  mutate(Outlying = 0) 
+
+
+#This is going to make a count for each of the rows for each thing it detects
+for(feature in features){
+  comparing.data = comparing.data |>
+    rowwise() |>
+    mutate(Within.Range = ifelse(get(feature) == "Within Range", Within.Range + 1, Within.Range)) |>
+    mutate(Out.of.Range = ifelse(get(feature) == "Out of Range", Out.of.Range + 1, Out.of.Range)) |>
+    mutate(Outlying = ifelse(get(feature) == "Outlying", Outlying + 1, Outlying))
+          
+}
+#Data for out of range (It will be above the min or below the max)
+(out.of.range.bar.plot = ggplot(comparing.data)+
+    geom_col(aes(x = artist, y = Out.of.Range,fill = artist))+
+    geom_hline(yintercept = 0)+
+    xlab("Artist")+
+    ylab("Amount of Data Out of Range for the Song Allentown")+
+    theme_minimal())+
+    guides(fill = "none")
+@
+\caption{Number of Statistics Out of Range for Each Band}
+\label{Figure 2}
+\end{center}
+\end{figure}
+\begin{figure}[ht]
+\begin{center}
+<<fig.width = 5.5, fig.height= 5.5, echo=F,message=F>>=
+library(tidyverse)
+
+#Step 1
+allentown.data = read_csv("data/essentia.data.allentown.csv")
+full.data = read_csv("data/essentia.data.csv")
+
+loudness.artist.data = full.data |>
+  group_by(artist) |>
+  summarize(#Finds the stats
+    IQR = quantile(overall_loudness, .75) - quantile(overall_loudness, 0.25),
+    Min = min(overall_loudness),
+    LF = quantile(overall_loudness, 0.25) - 1.5*IQR,
+    UF = quantile(overall_loudness, .75) + 1.5*IQR,
+    Max = max(overall_loudness)) |> #Puts all the stats in columns after to make it easier to look at
+  mutate(out.of.range = ifelse(allentown.data$overall_loudness > Max | allentown.data$overall_loudness < Min, "True", "False")) |>
+  mutate(unusual = ifelse(allentown.data$overall_loudness > UF | allentown.data$overall_loudness < LF, "True", "False")) |>
+  mutate(description = case_when(out.of.range == "True" ~ "Out of Range",
+                                 unusual == "True" ~ "Outlying",
+                                 TRUE ~ "Within Range"))
+
+compare = function(feature){#This function calculates how close it is to the IQR or range of a band for any given feature
+  artist.data = full.data |>
+    group_by(artist) |>
+    summarize(
+      IQR = quantile(get(feature), .75, na.rm=T) - quantile(get(feature), 0.25, na.rm=T),
+      Min = min(get(feature), na.rm=T),
+      LF = quantile(get(feature), 0.25, na.rm=T) - 1.5*IQR,
+      UF = quantile(get(feature), .75, na.rm=T) + 1.5*IQR,
+      Max = max(get(feature))) |>
+    mutate(out.of.range = ifelse(allentown.data[[feature]] > Max | allentown.data[[feature]] < Min, "True", "False")) |>
+    mutate(unusual = ifelse(allentown.data[[feature]] > UF | allentown.data[[feature]] < LF, "True", "False")) |>
+    mutate(!!feature := case_when(out.of.range == "True" ~ "Out of Range",
+                                   unusual == "True" ~ "Outlying",
+                                   TRUE ~ "Within Range")) |>
+    select(artist, !!sym(feature))
+  return(artist.data)
+  
+}
+
+#Step 2
+#I need a for loop to show 
+
+
+
+#This makes a dataframe of all the numeric values
+features = full.data |>
+  select(-c("artist", "album","track","chords_scale","chords_key","key","mode")) |>
+  colnames()
+
+            
+
+
+
+#This creates the data frame for the artists to merge
+comparing.data = full.data |>
+  group_by(artist) |>
+  summarize() |>
+  select(artist)
+
+#This makes the features into one dataframe with the outlying compared data using the function
+for(i in 1:length(features)){
+  results = compare(features[i])
+  comparing.data = comparing.data |>
+    right_join(results, by = "artist", suffix = c("", ""))
+}
+
+
+#This is to start the count at 0 for these rows  
+comparing.data = comparing.data |>
+  mutate(Within.Range = 0) |>
+  mutate(Out.of.Range = 0) |>
+  mutate(Outlying = 0) 
+
+
+#This is going to make a count for each of the rows for each thing it detects
+for(feature in features){
+  comparing.data = comparing.data |>
+    rowwise() |>
+    mutate(Within.Range = ifelse(get(feature) == "Within Range", Within.Range + 1, Within.Range)) |>
+    mutate(Out.of.Range = ifelse(get(feature) == "Out of Range", Out.of.Range + 1, Out.of.Range)) |>
+    mutate(Outlying = ifelse(get(feature) == "Outlying", Outlying + 1, Outlying))
+          
+}
+#Data for out of range (It will be above the min or below the max)
+(outlying.bar.plot = ggplot(comparing.data)+
+    geom_col(aes(x = artist, y = Outlying, fill = artist))+
+    geom_hline(yintercept = 0)+
+    xlab("Artist")+
+    ylab("Amount of Data Outlying for the Song Allentown")+
+    theme_minimal())+
+    guides(fill = "none")
+@
+\caption{Number of Statistics Outlying for Each Band}
+\label{Figure 3}
+\end{center}
+\end{figure}
+
+
+
+
+
+
+
 \end{document}
+
+
+

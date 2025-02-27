@@ -18,7 +18,7 @@ loudness.artist.data = full.data |>
                                  unusual == "True" ~ "Outlying",
                                  TRUE ~ "Within Range"))
 
-compare = function(feature){#This function takes all the data and puts it into a data frame and returns
+compare = function(feature){#This function calculates how close it is to the IQR or range of a band for any given feature
   artist.data = full.data |>
     group_by(artist) |>
     summarize(
@@ -46,6 +46,10 @@ compare = function(feature){#This function takes all the data and puts it into a
 features = full.data |>
   select(-c("artist", "album","track","chords_scale","chords_key","key","mode")) |>
   colnames()
+
+            
+
+
 
 #This creates the data frame for the artists to merge
 comparing.data = full.data |>
