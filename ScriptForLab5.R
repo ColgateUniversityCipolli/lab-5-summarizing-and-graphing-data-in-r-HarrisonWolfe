@@ -83,6 +83,7 @@ for(feature in features){
 }
 
 
+
 #Step 4
 
 #Data where it is in the range (In the IQR)
@@ -112,9 +113,10 @@ for(feature in features){
     ylab("Amount of Data Outlying for the Song Allentown")+
     theme_minimal())+
     guides(fill = "none")
+
     
   
-  
+
   
 
   
